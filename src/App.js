@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import QuoteBlock from "./stories/QuoteBlock";
+import BrandContext from "./BrandContext";
+import React, { useState } from "react";
+import { brands } from './dummyData'
+import "./App.css";
 
+// define possible brands
 function App() {
+  const quote = "The best way to predict the future is to create it.";
+  const [brand, setBrand] = useState(brands.A);
+
+  const toggleBrand = () => {
+    setBrand(brand === brands.A ? brands.B : brands.A);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrandContext.Provider value={{ brand, toggleBrand }}>
+      <QuoteBlock quote={quote} brand={brand} />
+      <button onClick={toggleBrand} className="toggle-btn">
+        Toggle Brand
+      </button>
+    </BrandContext.Provider>
   );
 }
 
